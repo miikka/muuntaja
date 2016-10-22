@@ -5,12 +5,14 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo
             :comments "same as Clojure"}
+  :java-source-paths ["java"]
   :dependencies [[cheshire "5.6.3" :exclusions [com.fasterxml.jackson.core/jackson-core]]
                  [com.fasterxml.jackson.core/jackson-databind "2.8.4"]
                  [circleci/clj-yaml "0.5.5"]
                  [clojure-msgpack "1.2.0" :exclusions [org.clojure/clojure]]
                  [com.cognitect/transit-clj "0.8.290"]]
-  :plugins [[lein-codox "0.10.1"]]
+  :plugins [[lein-codox "0.10.1"]
+            #_[lein-virgil "0.1.0"]]
   :codox {:src-uri "http://github.com/metosin/muuntaja/blob/master/{filepath}#L{line}"
           :defaults {:doc/format :markdown}}
   :profiles {:dev {:jvm-opts ^:replace ["-server"]

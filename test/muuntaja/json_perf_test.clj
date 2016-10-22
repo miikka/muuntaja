@@ -3,6 +3,7 @@
             [clojure.test :refer :all]
             [muuntaja.test_utils :refer :all]
             [muuntaja.json :as json]
+            [muuntaja.artisanal-json :as artisanal]
             [cheshire.core :as cheshire])
   (:import [java.util Map]))
 
@@ -53,6 +54,11 @@
   (title "encode: str")
   (let [encode (fn [] (str "{\"hello\":\"" "world" "\"}"))]
     (assert (= +json+ (encode)))
+    (cc/quick-bench (encode)))
+
+  (title "encode: muuntaja.artisanal-json")
+  (let [encode (fn [] (artisanal/to-json {"hello" "world"}))]
+    (assert (= +json+ (encode)))
     (cc/quick-bench (encode))))
 
 (defn decode-perf []
@@ -72,6 +78,11 @@
   ;; 246ns
   (title "decode: jackson")
   (let [decode (fn [] (.readValue json/mapper +json+ Map))]
+    (assert (= +data+ (decode)))
+    (cc/quick-bench (decode)))
+
+  (title "decode: muuntaja.artisanal-json")
+  (let [decode (fn [] (artisanal/from-json +json+))]
     (assert (= +data+ (decode)))
     (cc/quick-bench (decode))))
 
